@@ -138,8 +138,9 @@ def steep_traverse(map_input: List[List[float]], starting: tuple) -> List[tuple]
 
 	This function takes as its argument a map in the form of an array and the starting point in the form of a tuple, and 
 	calculates the traversal path. 
-	'''
 
+	This is not a particularly intelligent algorithm and will get stuck in local maxima if it does not reach the peak.
+	'''
 
 	steps = []
 
@@ -215,21 +216,117 @@ def steep_traverse(map_input: List[List[float]], starting: tuple) -> List[tuple]
 
 		if steepest['grade'] < 0 and map_input[current_node.x][current_node.y] != max_height:
 			current_node = previous_node
-
+		# If there is nowhere to go, you have reached a local maximum
+		elif current_node == previous_node or len(steps) == 1000:
+			break
 		else: 
 			steps.append(current_node)
-
-		previous_node = current_node
-		
-		current_node = node(map_input, steepest['node_x'], steepest['node_y'])
-
-		# If there is nowhere to go, you have reached a local maximum
-		if current_node == previous_node or len(steps) == 1000:
-			break
-		else:
-			
+			previous_node = current_node
+			current_node = node(map_input, steepest['node_x'], steepest['node_y'])
 
 	return steps
+
+
+
+
+
+def gradual_traverse(map_input: List[List[float]], starting: tuple) -> List[tuple]:
+	''' This is a function to invoke a gradual traverse, similar to steep traverse. The principle difference being that 
+	instead of picking the steepest step, the algorithm will pick the step with the most gradual positive slope.
+
+	'''
+
+	steps = []
+
+	max_height = 0
+	
+	for row in map_input:
+		height = max(row)
+		if height > max_height:
+			max_height = height
+
+	current_node = node(map_input, starting[0], starting[1])
+	previous_node = None
+
+	while True:
+
+		gradient = []
+
+
+		# Take the steepest step possible
+		if current_node.n_height == None:
+			pass
+		else:
+			grade = current_node.n_height - current_node.height
+			obj = {
+				'grade': grade,
+				'node_x': current_node.n[0],
+				'node_y': current_node.n[1],
+				'previous_x': current_node.x,
+				'previous_y': current_node.y
+			}
+			gradient.append(obj)
+
+		if current_node.s_height == None:
+			pass
+		else:
+			grade = current_node.s_height - current_node.height
+			obj = {
+				'grade': grade,
+				'node_x': current_node.s[0],
+				'node_y': current_node.s[1],
+				'previous_x': current_node.x,
+				'previous_y': current_node.y
+			}
+			gradient.append(obj)
+
+		if current_node.e_height == None:
+			pass
+		else:
+			grade = current_node.e_height - current_node.height
+			obj = {
+				'grade': grade,
+				'node_x': current_node.e[0],
+				'node_y': current_node.e[1],
+				'previous_x': current_node.x,
+				'previous_y': current_node.y
+			}
+			gradient.append(obj)
+
+		if current_node.w_height == None:
+			pass
+		else:
+			grade = current_node.w_height - current_node.height
+			obj = {
+				'grade': grade,
+				'node_x': current_node.w[0],
+				'node_y': current_node.w[1],
+				'previous_x': current_node.x,
+				'previous_y': current_node.y
+			}
+			gradient.append(obj)
+
+
+		pos_gradient = [] 
+		for index, item in enumerate(gradient):
+			if item['grade'] <= 0:
+				pos_gradient.append(item)
+
+
+		gradual = min(pos_gradient, key=lambda x:x['grade'])
+
+		if gradual['grade'] < 0 and map_input[current_node.x][current_node.y] != max_height:
+			current_node = previous_node
+		# If there is nowhere to go, you have reached a local maximum
+		elif current_node == previous_node or len(steps) == 1000:
+			break
+		else: 
+			steps.append(current_node)
+			previous_node = current_node
+			current_node = node(map_input, gradual['node_x'], gradual['node_y'])
+
+	return steps
+
 
 
 
