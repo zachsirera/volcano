@@ -327,6 +327,20 @@ def gradual_traverse(map_input: List[List[float]], starting: tuple) -> List[tupl
 
 	return steps
 
+def optimum_traverse(map_input: List[List[float]], starting: tuple) -> List[tuple]:
+	''' this is a placeholder for a function to pick an optimum traversal based on humans abilities to hike distance 
+	versus steep grade.
+
+	The goal is to employ some actual recursive algorithmic path and guarantee a summit. 
+	'''
+
+	pass
+
+
+
+
+
+
 
 
 
