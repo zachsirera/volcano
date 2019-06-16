@@ -78,10 +78,6 @@ class node:
 
 
 
-	def steep_grade(self):
-		''' This function calculates the gradient between a node and all adjacent nodes and returns the indices of the node
-		with the steepest grade. '''
-
 
 def ascent(map_input: List[List[float]], starting: tuple) -> List[tuple]:
 	''' This is a function to traverse the volcano from it's lowest point to its highest point.
