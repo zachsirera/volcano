@@ -62,11 +62,6 @@ class node:
 		except TypeError:
 			self.w_height = None
 
-		# Compile options for each algorithm
-		self.options = [self.n_height, self.s_height, self.e_height, self.w_height]
-		self.options_sorted = [x for x in self.options if x is not None]
-		self.steepest_step = max(self.options_sorted)
-		# self.steepest_next = 
 
 
 

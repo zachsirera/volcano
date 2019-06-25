@@ -39,7 +39,7 @@ def map() -> List[List[float]]:
 
 
 
-def plot(map_input: List[List[float]], step_array):
+def plot(map_input: List[List[float]], step_array1, step_array2):
 	''' This is a function to generate a surface plot of the path output from the pathfinder '''
 
 	# Plot the volcano image
@@ -47,15 +47,23 @@ def plot(map_input: List[List[float]], step_array):
 	plt.imshow(array)
 
 	# Compile the path data.
-	x = []
-	y =[]
+	x1 = []
+	y1 =[]
 
-	for item in step_array:
-		x.append(item.x)
-		y.append(item.y)
+	x2 = []
+	y2 = []
+
+	for item in step_array1:
+		x1.append(item.x)
+		y1.append(item.y)
+
+	for item in step_array2:
+		x2.append(item.x)
+		y2.append(item.y)
 
 	# Superimpose the path over the volcano image and display
-	plt.scatter(x, y, c='r', s=10)
+	plt.scatter(x1, y1, c='r', s=10)
+	plt.scatter(x2, y2, c='y', s=10)
 	plt.show()
 
 
@@ -67,17 +75,15 @@ def go(x: int, y: int):
 	# Generate the map from the volcano dataset. 
 	volcano_map = map()
 
-	# Carry out the steep traverse method
+	# Carry out the various ascents 
 	starting = (x, y)
-	initial_height = volcano_map[x][y]
-	steps = steepest.ascent(volcano_map, starting)
+	steep = steepest.ascent(volcano_map, starting)
+	grad = gradual.ascent(volcano_map, starting)
+	# recur = recursive.ascent(volcano_map, starting)
 
-	print(len(steps))
-
-	# final_height = volcano_map[steps[-1]['previous_x']][steps[-1][previous_y]]
 
 	# Plot the map
-	plot(volcano_map, steps)
+	plot(volcano_map, steep, grad)
 
 
 

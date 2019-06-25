@@ -2,7 +2,7 @@ from typing import List
 
 
 class node:
-	''' This is a class to define a node and its neighboring nodes. '''
+	''' This is a class to define a node and its neighboring nodes.'''
 
 	def __init__(self, map_input: List[List[float]], x: int, y: int):
 
@@ -60,11 +60,13 @@ class node:
 		except TypeError:
 			self.w_height = None
 
-		# Compile options for each algorithm
-		self.options = [self.n_height, self.s_height, self.e_height, self.w_height]
-		self.options_sorted = [x for x in self.options if x is not None]
-		self.steepest_step = max(self.options_sorted)
-		# self.steepest_next = 
+		
+
+		next_node = max([])
+
+		
+
+
 
 
 
@@ -78,7 +80,8 @@ class node:
 
 def ascent(map_input: List[List[float]], starting: tuple) -> List[tuple]:
 	''' This is a function to handle the ascent recursively, first collecting the information about all of the nodes and 
-	then asigning a path.
+	then asigning a path. The recursive algorithm will take the steepest path up, unless it reaches a local maxima, at which 
+	point it will backtrack to find another path. 
 
 
 	Inputs and outputs are the same as all of the other ascent/traversal functions. 
